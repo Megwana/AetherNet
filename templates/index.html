@@ -23,10 +23,13 @@
     <button onclick="overrideDecision('redirect')">Force Rainwater Redirection</button>
 
     <script>
+        const BASE_URL = "https://5000-megwana-aethernet-klhkwxd5dy5.ws-eu118.gitpod.io";
+
         function fetchSensorData() {
-            fetch("http://127.0.0.1:5000/sensor-data")
+            fetch(`${BASE_URL}/sensor-data`)
                 .then(response => response.json())
                 .then(data => {
+                    console.log("Fetched data:", data);
                     document.getElementById("temperature").innerText = data.temperature;
                     document.getElementById("humidity").innerText = data.humidity;
                     document.getElementById("rainfall").innerText = data.rainfall ? "Yes" : "No";
@@ -38,13 +41,15 @@
         }
 
         function overrideDecision(action) {
-            fetch(`http://127.0.0.1:5000/override?decision=${action}`)
+            fetch(`${BASE_URL}/override?decision=${action}`)
                 .then(response => response.json())
-                .then(data => alert(`System Override: ${data.new_decision}`));
+                .then(data => alert(`System Override: ${data.new_decision}`))
+                .catch(error => console.error("Error overriding decision:", error));
         }
 
         setInterval(fetchSensorData, 5000);
         fetchSensorData();
+
     </script>
 </body>
 </html>
