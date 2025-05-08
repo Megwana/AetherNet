@@ -9,15 +9,27 @@
 <body>
     <h1>Smart HVAC & Rainwater System</h1>
 
-    <div id="sensorData">
-        <p>🌡 Temperature: <span id="temperature">--</span> °C</p>
-        <p>💧 Humidity: <span id="humidity">--</span> %</p>
-        <p>🌧 Rainfall: <span id="rainfall">--</span></p>
-        <p>🚰 Tank Level: <span id="tankLevel">--</span> %</p>
-        <p>⚡ HVAC Load: <span id="hvacLoad">--</span> %</p>
-        <p><strong>🛠 System Decision:</strong> <span id="decision">--</span></p>
+    <div class="sensor-container">
+        <div class="sensor-box">
+            <p>🌡 Temperature: <span id="temperature">--</span> °C</p>
+        </div>
+        <div class="sensor-box">
+            <p>💧 Humidity: <span id="humidity">--</span> %</p>
+        </div>
+        <div class="sensor-box">
+            <p>🌧 Rainfall: <span id="rainfall">--</span></p>
+        </div>
+        <div class="sensor-box">
+            <p>🚰 Tank Level: <span id="tankLevel">--</span> %</p>
+        </div>
+        <div class="sensor-box">
+            <p>⚡ HVAC Load: <span id="hvacLoad">--</span> %</p>
+        </div>
+        <div class="sensor-box">
+            <p><strong>🛠 System Decision:</strong> <span id="decision">--</span></p>
+        </div>
     </div>
-
+    
     <h2>System Overrides</h2>
     <button onclick="overrideDecision('store')">Force Rainwater Storage</button>
     <button onclick="overrideDecision('redirect')">Force Rainwater Redirection</button>

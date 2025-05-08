@@ -8,26 +8,15 @@
     --accent-color: #39FF14;
 }
 
-/* Reset Defaults */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    text-decoration: none;
-    border: none;
-    outline: none;
-    scroll-behavior: smooth;
-    font-family: "Poppins", sans-serif;
-}
-
-/* Body Styling */
+/* General Page Styling */
 body {
     background-color: var(--bg-color);
     color: var(--text-color);
+    font-family: "Poppins", sans-serif;
     text-align: center;
 }
 
-/* Header Styling */
+/* Header */
 h1 {
     color: var(--main-color);
     font-size: 3rem;
@@ -35,19 +24,38 @@ h1 {
     text-shadow: 0 0 15px var(--main-color);
 }
 
-/* Sensor Data Box */
-#sensorData {
+/* Sensor Data Section */
+.sensor-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid */
+    gap: 2rem 6rem; 
+    justify-content: center;
+    margin: 4rem auto;
+    max-width: 1000px; /* Prevents excessive width */
+}
+
+/* Individual Sensor Box */
+.sensor-box {
     background-color: var(--second-bg-color);
-    padding: 20px;
-    border-radius: 8px;
-    display: inline-block;
+    margin: 2rem;
+    padding: 25px;
+    border-radius: 10px;
+    text-align: center;
     box-shadow: 0 0 15px rgba(0, 255, 238, 0.6);
-    font-size: 1.8rem;
     border: 2px solid var(--main-color);
+    font-size: 2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 180px;
+    min-width: 280px; /* Prevents shrinking too much */
+}
+
+.sensor-box:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px var(--accent-color);
 }
 
 /* Sensor Data Text */
-#sensorData p {
+.sensor-box p {
     color: var(--text-color);
     margin-bottom: 10px;
 }
@@ -70,20 +78,4 @@ button {
 button:hover {
     background: var(--accent-color);
     box-shadow: 0 0 20px var(--accent-color);
-}
-
-/* Logo Styling */
-.logo span {
-    color: var(--highlight-color);
-}
-
-/* Override Buttons */
-button.override {
-    background: var(--highlight-color);
-    box-shadow: 0 0 15px var(--highlight-color);
-}
-
-button.override:hover {
-    background: var(--accent-color);
-    box-shadow: 0 0 25px var(--accent-color);
 }
