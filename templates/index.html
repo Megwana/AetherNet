@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AetherNet - Smart HVAC & Rainwater Management</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+<body>
+    <h1>Smart HVAC & Rainwater System</h1>
+
+    <div id="sensorData">
+        <p>🌡 Temperature: <span id="temperature">--</span> °C</p>
+        <p>💧 Humidity: <span id="humidity">--</span> %</p>
+        <p>🌧 Rainfall: <span id="rainfall">--</span></p>
+        <p>🚰 Tank Level: <span id="tankLevel">--</span> %</p>
+        <p>⚡ HVAC Load: <span id="hvacLoad">--</span> %</p>
+        <p><strong>🛠 System Decision:</strong> <span id="decision">--</span></p>
+    </div>
+
+    <h2>System Overrides</h2>
+    <button onclick="overrideDecision('store')">Force Rainwater Storage</button>
+    <button onclick="overrideDecision('redirect')">Force Rainwater Redirection</button>
+
+    <script>
+        function fetchSensorData() {
+            fetch("http://127.0.0.1:5000/sensor-data")
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("temperature").innerText = data.temperature;
+                    document.getElementById("humidity").innerText = data.humidity;
+                    document.getElementById("rainfall").innerText = data.rainfall ? "Yes" : "No";
+                    document.getElementById("tankLevel").innerText = data.tank_level;
+                    document.getElementById("hvacLoad").innerText = data.hvac_load;
+                    document.getElementById("decision").innerText = data.system_decision;
+                })
+                .catch(error => console.error("Error fetching data:", error));
+        }
+
+        function overrideDecision(action) {
+            fetch(`http://127.0.0.1:5000/override?decision=${action}`)
+                .then(response => response.json())
+                .then(data => alert(`System Override: ${data.new_decision}`));
+        }
+
+        setInterval(fetchSensorData, 5000);
+        fetchSensorData();
+    </script>
+</body>
+</html>
+
