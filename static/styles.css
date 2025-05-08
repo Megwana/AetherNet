@@ -1,3 +1,14 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    scroll-behavior: smooth;
+    font-family: "Poppins", sans-serif;
+}
+
 /* Global Variables */
 :root {
     --bg-color: #080808;
@@ -8,12 +19,127 @@
     --accent-color: #39FF14;
 }
 
+html{
+    font-size: 60%;
+    overflow-x: hidden;
+}
+
+
 /* General Page Styling */
 body {
     background-color: var(--bg-color);
     color: var(--text-color);
     font-family: "Poppins", sans-serif;
     text-align: center;
+}
+
+/* Navbar Styling */
+.header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 4rem 12% 4rem;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 5;
+}
+
+/* Logo */
+.logo{
+    font-size: 3rem;
+    color: var(--text-color);
+    font-weight: 800;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+
+.logo:hover {
+    transform: scale(1.1);
+}
+
+.logo span {
+    text-shadow: 0 0 35px var(--main-color);
+    color: var(--highlight-color);
+}
+
+/* ADD LOGO IMAGE!! */
+.cloud{
+    font-size: 5rem;
+}
+
+/* Navbar Links */
+.navbar {
+    display: flex;
+}
+
+.navbar a {
+    font-size: 1.8rem;
+    color: var(--text-color);
+    margin-left: 4rem;
+    font-weight: 500;
+    transition: 0.3s ease;
+    border-bottom: 3px solid transparent;
+}
+
+.navbar a:hover,
+.navbar a.active {
+    color: var(--text-color);
+    padding: 1rem;
+    border-bottom: 3px solid var(--nature-color);  
+}
+
+/* Mobile Menu Icon */
+#menu-icon {
+    font-size: 3.6rem;
+    color: var(--accent-color);
+    display: none;
+    cursor: pointer;
+}
+
+section{
+    min-height: 100vh;
+    padding: 10rem 12% 10rem
+}
+
+/* Responsive Navbar */
+@media (max-width: 991px) {
+    .header {
+        padding: 1.5rem 5%;
+    }
+    
+    .navbar {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: var(--bg-color);
+        width: 100%;
+        padding: 1rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        border-radius: 0 0 8px 8px;
+        transform: translateY(-20px);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .navbar.active {
+        display: flex;
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    #menu-icon {
+        display: block;
+    }
 }
 
 /* Header */
