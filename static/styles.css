@@ -1,17 +1,89 @@
+/* Global Variables */
+:root {
+    --bg-color: #080808;
+    --second-bg-color: #131313;
+    --text-color: white;
+    --main-color: #00ffee;
+    --highlight-color: #A100FF;
+    --accent-color: #39FF14;
+}
+
+/* Reset Defaults */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    scroll-behavior: smooth;
+    font-family: "Poppins", sans-serif;
+}
+
+/* Body Styling */
 body {
-    font-family: Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
     text-align: center;
-    background-color: #f4f4f4;
 }
 
+/* Header Styling */
 h1 {
-    color: #333;
+    color: var(--main-color);
+    font-size: 3rem;
+    margin: 2rem 0;
+    text-shadow: 0 0 15px var(--main-color);
 }
 
+/* Sensor Data Box */
 #sensorData {
-    background-color: white;
+    background-color: var(--second-bg-color);
     padding: 20px;
     border-radius: 8px;
     display: inline-block;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 15px rgba(0, 255, 238, 0.6);
+    font-size: 1.8rem;
+    border: 2px solid var(--main-color);
+}
+
+/* Sensor Data Text */
+#sensorData p {
+    color: var(--text-color);
+    margin-bottom: 10px;
+}
+
+/* Buttons */
+button {
+    display: inline-block;
+    padding: 10px 15px;
+    font-size: 1.6rem;
+    font-weight: 600;
+    border-radius: 5px;
+    background: var(--highlight-color);
+    color: white;
+    border: 2px solid var(--main-color);
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    margin: 10px;
+}
+
+button:hover {
+    background: var(--accent-color);
+    box-shadow: 0 0 20px var(--accent-color);
+}
+
+/* Logo Styling */
+.logo span {
+    color: var(--highlight-color);
+}
+
+/* Override Buttons */
+button.override {
+    background: var(--highlight-color);
+    box-shadow: 0 0 15px var(--highlight-color);
+}
+
+button.override:hover {
+    background: var(--accent-color);
+    box-shadow: 0 0 25px var(--accent-color);
 }
