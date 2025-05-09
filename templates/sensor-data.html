@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AetherNet - Smart HVAC & Rainwater Management</title>
+    <link rel="stylesheet" href="static/styles.css">
+    <script src="/static/script.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header class="header">
+        <a href="#" class="logo">Aester<span>Net</span></a>
+        
+        <nav class="navbar">
+            <a href="/">Home</a>
+            <a href="/sensor-data">Features</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </nav>
+
+        <div id="menu-icon">☰</div>
+    </header>
+    <section class="settings">
+        <h2>System Overrides</h2>
+        <button onclick="overrideDecision('store')">Force Rainwater Storage</button>
+        <button onclick="overrideDecision('redirect')">Force Rainwater Redirection</button>
+
+        <!-- ✅ UI Feedback Box -->
+        <div id="overrideMessage" class="override-message">
+            Override Applied: None
+        </div>
+    </section>

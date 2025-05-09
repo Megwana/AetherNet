@@ -62,8 +62,20 @@ function overrideDecision(action) {
     fetch(`${BASE_URL}/api/override?decision=${action}`, { method: "GET" })
         .then(response => response.json())
         .then(data => {
-            alert(`System Override: ${data.new_decision}`);
-            document.getElementById("decision").innerText = data.new_decision; // ✅ Update UI
+            // ✅ Show Visual Confirmation
+            const overrideMessage = document.getElementById("overrideMessage");
+            overrideMessage.innerText = `Override Applied: ${data.new_decision}`;
+            overrideMessage.style.opacity = "1"; // Make it visible
+            overrideMessage.style.transform = "scale(1)"; // Animate visibility
+
+            // ✅ Update Decision Box
+            document.getElementById("decision").innerText = data.new_decision;
+
+            // ✅ Hide Message After 5 Seconds
+            setTimeout(() => {
+                overrideMessage.style.opacity = "0"; 
+                overrideMessage.style.transform = "scale(0.9)";
+            }, 5000);
         })
         .catch(error => console.error("Error overriding decision:", error));
 }

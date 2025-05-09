@@ -82,7 +82,6 @@ def get_sensor_data():
     data["system_decision"] = override_decision if override_decision else hvac_rainwater_logic(data)
     return jsonify(data)
 
-
 @app.route('/api/override', methods=['GET'])
 def override_system():
     global override_decision

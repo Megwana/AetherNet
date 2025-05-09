@@ -205,3 +205,18 @@ button:hover {
     background: var(--accent-color);
     box-shadow: 0 0 20px var(--accent-color);
 }
+
+.override-message {
+    margin-top: 15px;
+    padding: 10px;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--text-color);
+    background-color: rgba(0, 255, 238, 0.2);
+    border: 2px solid var(--main-color);
+    text-align: center;
+    border-radius: 8px;
+    opacity: 0; /* Initially hidden */
+    transform: scale(0.9);
+    transition: opacity 0.5s ease-in-out, transform 0.3s ease-in-out;
+}
