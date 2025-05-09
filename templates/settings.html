@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Settings</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="/static/script.js"></script>
+</head>
+<body>
+    <header class="header">
+        <a href="/" class="logo">Aester<span>Net</span></a>
+        <nav class="navbar">
+            <a href="/">Home</a>
+            <a href="/sensor-data">Features</a>
+            <a href="/settings">Settings</a>
+        </nav>
+    </header>
+    <header class="header">
+        <a href="#" class="logo">Aester<span>Net</span></a>
+        
+        <nav class="navbar">
+            <a href="#">Home</a>
+            <a href="/sensor-data">Features</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </nav>
+        <div id="menu-icon">☰</div>
+    </header>
+    <section>
+        <h2>System Overrides</h2>
+        <button onclick="overrideDecision('store')">Force Rainwater Storage</button>
+        <button onclick="overrideDecision('redirect')">Force Rainwater Redirection</button>
+    
+        <div id="overrideMessage" class="override-message">Override Applied: None</div>
+
+        <h2>System Threshold Settings</h2>
+    <form id="thresholdForm">
+        <label for="humidityThreshold">Humidity Threshold (%):</label>
+        <input type="number" id="humidityThreshold" min="50" max="100" value="70">
+
+        <label for="temperatureThreshold">Temperature Threshold (°C):</label>
+        <input type="number" id="temperatureThreshold" min="5" max="30" value="10">
+
+        <button type="submit">Save Settings</button>
+    </form>
+
+    <div id="saveMessage" class="save-message">Settings Saved Successfully!</div>
+    </section>
+</body>
+</html>

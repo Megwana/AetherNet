@@ -32,3 +32,13 @@ Override buttons are useful because they give the user manual control over the s
 `Example: A sudden storm causes flooding, so the user overrides the system to redirect rainwater immediately.`
 - Not every user wants strict automation—having overrides makes the system more user-friendly.
 `Example: Some users prefer to store rainwater regardless of weather trends, while others prioritize irrigation needs.`
+
+### 🔹 System Sequence Diagram (Message Flow)
+
+![MQTT Image Flow](./mgtt_flow.png)
+
+- **Sensors publish environmental data via MQTT.**  
+- **Flask receives and processes the data, applying automation rules.**  
+- **Web Dashboard subscribes to MQTT topics for real-time visualization.**  
+
+

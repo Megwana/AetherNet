@@ -1,9 +1,20 @@
 from flask import Flask, jsonify, render_template, request
+from flask_mqtt import Mqtt
 import random
 import datetime
 from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
+
+# ✅ Add MQTT Configuration Here
+app.config['MQTT_BROKER_URL'] = 'broker.hivemq.com'
+app.config['MQTT_BROKER_PORT'] = 1883  # Instead of 8883
+app.config['MQTT_TLS_ENABLED'] = False
+app.config['MQTT_USERNAME'] = 'your_username'
+app.config['MQTT_PASSWORD'] = 'your_password'
+app.config['MQTT_KEEPALIVE'] = 60
+
+mqtt = Mqtt(app)
 
 def generate_fake_sensor_data():
     """Simulates Newcastle UK weather conditions dynamically with better formatting."""
@@ -96,6 +107,67 @@ def override_system():
 
     return jsonify({"new_decision": override_decision})
 
+@mqtt.on_connect()
+def handle_connect(client, userdata, flags, rc):
+    """Handles connection to MQTT broker."""
+    mqtt.subscribe('aesternet/sensor')
+
+@mqtt.on_message()
+def handle_message(client, userdata, message):
+    """Processes MQTT data when received."""
+    print(f"Received: {message.payload.decode()}")
+
+@app.route('/api/mqtt-status')
+def mqtt_status():
+    return jsonify({"status": "Connected" if mqtt.is_connected else "Disconnected"})
+
+def estimate_savings(data):
+    """Estimates potential energy and water savings based on system optimization."""
+    baseline_hvac_usage = 70  # Example: Assume HVAC uses 70 kWh per day
+    optimized_hvac_usage = baseline_hvac_usage * (1 - 0.15)  # Assume 15% reduction
+
+    baseline_water_waste = 100  # Example: Assume 100 liters wasted per day
+    optimized_water_use = baseline_water_waste * (1 - 0.20)  # Assume 20% reduction
+
+    return {
+        "energy_savings_kwh": round(baseline_hvac_usage - optimized_hvac_usage, 2),
+        "water_savings_liters": round(baseline_water_waste - optimized_water_use, 2),
+        "efficiency_gain": f"{round(((baseline_hvac_usage - optimized_hvac_usage) / baseline_hvac_usage) * 100, 2)}%"
+    }
+
+@app.route('/api/savings')
+def get_estimated_savings():
+    """Returns estimated savings metrics."""
+    fake_data = generate_fake_sensor_data()
+    savings = estimate_savings(fake_data)
+    return jsonify(savings)
+
+@app.route('/settings')
+def settings_page():
+    return render_template('settings.html')
+# Store user thresholds
+user_thresholds = {"humidity": 70, "temperature": 10}
+
+@app.route('/api/set-thresholds', methods=['POST'])
+def set_thresholds():
+    """Receives and stores user-defined thresholds."""
+    global user_thresholds
+    thresholds = request.json
+    user_thresholds["humidity"] = int(thresholds["humidity"])
+    user_thresholds["temperature"] = int(thresholds["temperature"])
+    return jsonify({"status": "success", "updated_thresholds": user_thresholds})
+
+def hvac_rainwater_logic(data):
+    """Defines automated adjustments based on user thresholds."""
+    if data["humidity"] > user_thresholds["humidity"] and data["rainfall"]:
+        action = "Reduce HVAC cooling & store rainwater"
+    elif data["temperature"] < user_thresholds["temperature"]: 
+        action = "Increase heating for comfort"
+    elif data["tank_level"] > 90:
+        action = "Redirect excess rainwater to irrigation"
+    else:
+        action = "Maintain normal operations"
+    return action
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -80,6 +80,25 @@ function overrideDecision(action) {
         .catch(error => console.error("Error overriding decision:", error));
 }
 
+document.getElementById("thresholdForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const humidityThreshold = document.getElementById("humidityThreshold").value;
+    const temperatureThreshold = document.getElementById("temperatureThreshold").value;
+
+    fetch(`${BASE_URL}/api/set-thresholds`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ humidity: humidityThreshold, temperature: temperatureThreshold })
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById("saveMessage").style.opacity = "1";
+        setTimeout(() => document.getElementById("saveMessage").style.opacity = "0", 3000);
+    })
+    .catch(error => console.error("Error saving thresholds:", error));
+});
+
 // Initialize Charts and Set Refresh Interval
 document.addEventListener("DOMContentLoaded", () => {
     createCharts();
