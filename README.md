@@ -41,4 +41,73 @@ Override buttons are useful because they give the user manual control over the s
 - **Flask receives and processes the data, applying automation rules.**  
 - **Web Dashboard subscribes to MQTT topics for real-time visualization.**  
 
+### Frontend
+•
+HTML (HyperText Markup Language): This is the backbone of any website, providing the basic structure and content. HTML elements define headings, paragraphs, links, images, and other essential components.
+
+•
+CSS (Cascading Style Sheets): CSS is used to style the HTML elements, controlling the layout, colors, fonts, and overall visual appearance of the website. It ensures that the website is aesthetically pleasing and consistent across different devices.
+
+•
+JavaScript: While websites are generally less interactive than web apps, JavaScript can still be used to add dynamic elements such as sliders, forms, and simple animations, enhancing the user experience.
+
+### Back End(Server-Side):
+
+•
+Web Server: This is the hardware or software that serves the website’s content to users. Common web servers include Apache, Nginx, and Microsoft IIS. The web server handles requests from users’ browsers and delivers the appropriate HTML, CSS, and JavaScript files.
+
+•
+Database: Websites often use databases to store and manage content. Databases like MySQL, PostgreSQL, or MongoDB can be used to store articles, images, user data, and other content that needs to be dynamically retrieved and displayed on the website.
+
+•
+Server-Side Processing: Languages like PHP, Python, Ruby, Java, C#, or Node.js are used to create dynamic content and interact with the database. For example, a PHP script might retrieve the latest blog posts from a database and format them into HTML to be displayed on the website
+
+### Types of APIs
+
+•
+REST (Representational State Transfer): RESTful APIs use HTTP requests to perform CRUD (Create, Read, Update, Delete) operations. They are stateless and rely on standard HTTP methods like GET, POST, PUT, and DELETE.
+
+•
+SOAP (Simple Object Access Protocol): SOAP APIs use XML-based messaging protocols and are known for their robustness and security features. They are often used in enterprise-level applications.
+
+•
+GraphQL: A query language for APIs that allows clients to request specific data, reducing the amount of data transferred over the network. It provides more flexibility compared to REST.
+
+### Key Concepts
+
+•
+Endpoints: Specific URLs where API services are accessed. Each endpoint corresponds to a particular function or resource.
+
+•
+Authentication and Authorisation: Ensuring that only authorised users can access certain API endpoints. Common methods include API keys, OAuth, and JWT (JSON Web Tokens).
+
+•
+Rate Limiting: Controlling the number of API requests a user can make within a certain time frame to prevent abuse and ensure fair usage.
+
+### Design Principles to bare in mind learn from the course:
+
+- Follow best practices such as using consistent naming conventions, versioning your API, and providing clear documentation.
+
+### Security Considerations
+
+•
+Data Encryption: Use HTTPS to encrypt data transmitted between the client and the server.
+
+•
+Input Validation: Validate and sanitise inputs to prevent security vulnerabilities like SQL injection and cross-site scripting (XSS).
+
+•
+Access Control: Implement role-based access control (RBAC) to restrict access to sensitive endpoints.
+
+### Best Practices:
+•
+Documentation: Provide comprehensive and clear documentation for your API, including usage examples, error codes, and response formats.
+
+•
+Testing: Use tools like Postman or automated testing frameworks to thoroughly test your API endpoints.
+
+•
+Monitoring and Analytics: Implement monitoring tools to track API usage, performance, and errors.
+
+### Create a Login 
 
