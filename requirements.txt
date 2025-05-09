@@ -1,0 +1,9 @@
+blinker==1.9.0
+click==8.1.8
+Flask==3.1.0
+flask-cors==5.0.1
+Flask-MQTT==1.2.1
+itsdangerous==2.2.0
+paho-mqtt==1.6.1
+python-dotenv==1.1.0
+Werkzeug==3.1.3

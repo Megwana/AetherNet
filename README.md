@@ -111,3 +111,10 @@ Monitoring and Analytics: Implement monitoring tools to track API usage, perform
 
 ### Create a Login 
 
+### Scalability:
+
+Scalability ensures that a web app can handle increased loads without compromising performance. Techniques such as load balancing, caching, and using microservices architecture are essential for achieving scalability.
+
+Security is paramount in web application development to protect sensitive data and ensure user trust. Practices include data encryption (using HTTPS), input validation to prevent vulnerabilities like SQL injection and cross-site scripting (XSS), and implementing authentication and authorisation mechanisms.
+
+Regular security audits and keeping software up to date are also crucial for maintaining security.
