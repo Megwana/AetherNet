@@ -13,11 +13,11 @@ app = Flask(__name__)
 CORS(app)
 
 # MQTT Configuration (secure)
-app.config['MQTT_BROKER_URL'] = 'broker.hivemq.com'
+app.config['MQTT_BROKER_URL'] = 'broker.hivemq.com'  # Update with your actual broker URL
 app.config['MQTT_BROKER_PORT'] = 1883
 app.config['MQTT_TLS_ENABLED'] = False
-app.config['MQTT_USERNAME'] = os.getenv('MQTT_USERNAME')
-app.config['MQTT_PASSWORD'] = os.getenv('MQTT_PASSWORD')
+app.config['MQTT_USERNAME'] = os.getenv('MQTT_USERNAME')  # Loaded from .env
+app.config['MQTT_PASSWORD'] = os.getenv('MQTT_PASSWORD')  # Loaded from .env
 app.config['MQTT_KEEPALIVE'] = 60
 
 mqtt = Mqtt(app)
@@ -129,7 +129,9 @@ def handle_message(client, userdata, message):
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    base_url = os.getenv('BASE_URL')  # Fetch base_url from environment variable or config
+    return render_template('index.html', base_url=base_url)
+
 
 @app.route('/sensor-data')
 def sensor_data_page():
@@ -189,5 +191,10 @@ def mqtt_status():
 
 # ------------------ Entry ------------------
 
+# Flask Configuration
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(
+        host=os.getenv("FLASK_RUN_HOST", "127.0.0.1"),  # Default to localhost if not set
+        port=int(os.getenv("FLASK_RUN_PORT", 5000)),  # Default to 5000 if not set
+        debug=os.getenv("FLASK_ENV") == "development"  # Set debug mode based on FLASK_ENV
+    )

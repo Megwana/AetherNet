@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AetherNet - Smart HVAC & Rainwater Management</title>
     <link rel="stylesheet" href="static/styles.css">
-    <script src="/static/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
@@ -25,19 +24,19 @@
 
         <div class="sensor-container">
             <div class="sensor-box">
-                <p>🌡 Temperature: <span id="temperature">--</span> °C</p>
+                <p>🌡 Temperature: <span id="temperature">--</span></p>
             </div>
             <div class="sensor-box">
-                <p>💧 Humidity: <span id="humidity">--</span> %</p>
+                <p>💧 Humidity: <span id="humidity">--</span></p>
             </div>
             <div class="sensor-box">
                 <p>🌧 Rainfall: <span id="rainfall">--</span></p>
             </div>
             <div class="sensor-box">
-                <p>🚰 Tank Level: <span id="tankLevel">--</span> %</p>
+                <p>🚰 Tank Level: <span id="tankLevel">--</span></p>
             </div>
             <div class="sensor-box">
-                <p>⚡ HVAC Load: <span id="hvacLoad">--</span> %</p>
+                <p>⚡ HVAC Load: <span id="hvacLoad">--</span></p>
             </div>
             <div class="sensor-box">
                 <p><strong>🛠 System Decision:</strong> <span id="decision">--</span></p>
@@ -55,6 +54,9 @@
             </div>
         </div>
     </section>
-</body>
+    <script>
+        const BASE_URL = "{{ base_url }}";
+      </script>
+      <script src="{{ url_for('static', filename='script.js') }}"></script>
 </html>
 
