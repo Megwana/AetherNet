@@ -80,25 +80,33 @@ function overrideDecision(action) {
         .catch(error => console.error("Error overriding decision:", error));
 }
 
-document.getElementById("thresholdForm").addEventListener("submit", function (event) {
-    event.preventDefault();
+const thresholdForm = document.getElementById("thresholdForm");
 
-    const humidityThreshold = document.getElementById("humidityThreshold").value;
-    const temperatureThreshold = document.getElementById("temperatureThreshold").value;
+if (thresholdForm) {
+    thresholdForm.addEventListener("submit", function (event) {
+        event.preventDefault();  // ✅ Stops default form submission
 
-    fetch(`${BASE_URL}/api/set-thresholds`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ humidity: humidityThreshold, temperature: temperatureThreshold })
-    })
-    .then(response => response.json())
-    .then(data => {
-        document.getElementById("saveMessage").style.opacity = "1";
-        setTimeout(() => document.getElementById("saveMessage").style.opacity = "0", 3000);
-    })
-    .catch(error => console.error("Error saving thresholds:", error));
-});
+        const humidityThreshold = document.getElementById("humidityThreshold").value;
+        const temperatureThreshold = document.getElementById("temperatureThreshold").value;
 
+        fetch(`${BASE_URL}/api/set-thresholds`, {  // ✅ Sends user-defined thresholds to Flask API
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ humidity: humidityThreshold, temperature: temperatureThreshold })
+        })
+        .then(response => response.json())
+        .then(data => {
+            const saveMessage = document.getElementById("saveMessage");
+
+            if (saveMessage) {  // ✅ Ensures feedback message exists
+                saveMessage.style.opacity = "1";  // ✅ Shows confirmation
+                setTimeout(() => saveMessage.style.opacity = "0", 3000);  // ✅ Hides after 3 seconds
+            }
+        })
+        .catch(error => console.error("Error saving thresholds:", error));
+    });
+}
+    
 // Initialize Charts and Set Refresh Interval
 document.addEventListener("DOMContentLoaded", () => {
     createCharts();
