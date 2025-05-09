@@ -72,15 +72,16 @@ def home():
     return render_template('index.html')  # Flask searches in 'templates/' folder
 
 @app.route('/sensor-data')
+def sensor_data_page():
+    return render_template('sensor-data.html')
+
+@app.route('/api/sensor-data')
 def get_sensor_data():
-    """Returns dynamically generated Newcastle weather-based sensor data."""
     data = generate_fake_sensor_data()
-    
-    # Apply automation logic unless an override exists
     global override_decision
     data["system_decision"] = override_decision if override_decision else hvac_rainwater_logic(data)
-
     return jsonify(data)
+
 
 @app.route('/override', methods=['GET'])
 def override_system():
