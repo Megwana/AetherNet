@@ -1,3 +1,6 @@
+# ============================================================================
+#                                 IMPORTS
+# ============================================================================
 import os
 import json
 import random
@@ -7,13 +10,17 @@ from flask_mqtt import Mqtt
 from flask_cors import CORS
 from dotenv import load_dotenv
 
-load_dotenv()  # Load environment variables from a .env file
+# Load environment variables from a .env file
+load_dotenv()
 
+# Initialize Flask app and enable CORS
 app = Flask(__name__)
 CORS(app)
 
-# MQTT Configuration (secure)
-app.config['MQTT_BROKER_URL'] = 'broker.hivemq.com'  # Update with your actual broker URL
+# ============================================================================
+#                   MQTT Configuration (secure)
+# ============================================================================
+app.config['MQTT_BROKER_URL'] = 'broker.hivemq.com'  # Update with actual broker URL
 app.config['MQTT_BROKER_PORT'] = 1883
 app.config['MQTT_TLS_ENABLED'] = False
 app.config['MQTT_USERNAME'] = os.getenv('MQTT_USERNAME')  # Loaded from .env
@@ -22,34 +29,43 @@ app.config['MQTT_KEEPALIVE'] = 60
 
 mqtt = Mqtt(app)
 
-# Data Storage Paths
+# ============================================================================
+#                   Data Storage Paths
+# ============================================================================
 THRESHOLD_FILE = 'thresholds.json'
 OVERRIDE_FILE = 'override.json'
 
-# Ensure files exist
+# Ensure required files exist, creating defaults if necessary
 for f, default in [(THRESHOLD_FILE, {"humidity": 70, "temperature": 10}),
                    (OVERRIDE_FILE, {"decision": None})]:
     if not os.path.exists(f):
         with open(f, 'w') as file:
             json.dump(default, file)
 
-# ------------------ Utility Functions ------------------
+# ============================================================================
+#                           Utility Functions 
+# ============================================================================
 
 def load_json(file_path):
+    """Loads JSON data from a specified file."""
     with open(file_path, 'r') as f:
         return json.load(f)
 
 def save_json(file_path, data):
+    """Saves JSON data to a specified file."""
     with open(file_path, 'w') as f:
         json.dump(data, f)
 
 def get_thresholds():
+    """Fetches current system thresholds from the threshold file."""
     return load_json(THRESHOLD_FILE)
 
 def get_override():
+    """Fetches the current override decision from the override file."""
     return load_json(OVERRIDE_FILE).get("decision")
 
 def set_override(value):
+    """Sets the system's override decision in the override file."""
     save_json(OVERRIDE_FILE, {"decision": value})
 
 def generate_fake_sensor_data():
@@ -87,6 +103,7 @@ def generate_fake_sensor_data():
     }
 
 def evaluate_logic(data):
+    """Evaluates the system's decision based on the incoming sensor data."""
     thresholds = get_thresholds()
     if data["humidity"] > thresholds["humidity"] and data["rainfall"]:
         return "Reduce HVAC cooling & store rainwater"
@@ -97,7 +114,7 @@ def evaluate_logic(data):
     return "Maintain normal operations"
 
 def estimate_savings(data):
-    """Estimates potential HVAC/water savings."""
+    """Estimates potential HVAC and water savings based on system data."""
     baseline_hvac = 70
     optimized_hvac = baseline_hvac * 0.85
     baseline_water = 100
@@ -109,15 +126,18 @@ def estimate_savings(data):
         "efficiency_gain": f"{round((1 - (optimized_hvac / baseline_hvac)) * 100, 2)}%"
     }
 
-# ------------------ MQTT ------------------
-
+# ============================================================================
+#                       MQTT    
+# ============================================================================
 @mqtt.on_connect()
 def handle_connect(client, userdata, flags, rc):
+    """Handles MQTT connection events and subscribes to the relevant topic."""
     mqtt.subscribe('aesternet/sensor')
     print("[MQTT] Connected and subscribed to topic.")
 
 @mqtt.on_message()
 def handle_message(client, userdata, message):
+    """Handles incoming MQTT messages."""
     try:
         payload = json.loads(message.payload.decode())
         print("[MQTT] Received:", payload)
@@ -125,24 +145,29 @@ def handle_message(client, userdata, message):
     except Exception as e:
         print("[MQTT] Failed to parse payload:", e)
 
-# ------------------ Routes ------------------
+# ============================================================================
+#                               ROUTES
+# ============================================================================
 
 @app.route('/')
 def home():
+    """Renders the home page with the base URL."""
     base_url = os.getenv('BASE_URL')  # Fetch base_url from environment variable or config
     return render_template('index.html', base_url=base_url)
 
-
 @app.route('/sensor-data')
 def sensor_data_page():
+    """Renders the sensor data page."""
     return render_template('sensor-data.html')
 
 @app.route('/settings')
 def settings_page():
+    """Renders the settings page."""
     return render_template('settings.html')
 
 @app.route('/api/sensor-data')
 def get_sensor_data():
+    """Fetches the sensor data and returns it in JSON format."""
     try:
         data = generate_fake_sensor_data()
         override = get_override()
@@ -153,6 +178,7 @@ def get_sensor_data():
 
 @app.route('/api/override', methods=['GET'])
 def override_system():
+    """Handles system override decisions based on user input."""
     decision = request.args.get('decision')
     decision_map = {
         "store": "Force Rainwater Storage",
@@ -168,6 +194,7 @@ def override_system():
 
 @app.route('/api/set-thresholds', methods=['POST'])
 def set_thresholds():
+    """Sets the system's humidity and temperature thresholds."""
     try:
         data = request.json
         humidity = int(data.get("humidity"))
@@ -179,6 +206,7 @@ def set_thresholds():
 
 @app.route('/api/savings')
 def get_savings():
+    """Fetches potential savings for energy and water based on sensor data."""
     try:
         data = generate_fake_sensor_data()
         return jsonify(estimate_savings(data))
@@ -187,9 +215,12 @@ def get_savings():
 
 @app.route('/api/mqtt-status')
 def mqtt_status():
+    """Returns the MQTT connection status."""
     return jsonify({"status": "Connected" if mqtt.is_connected else "Disconnected"})
 
-# ------------------ Entry ------------------
+# ============================================================================
+#                           ENTRY
+# ============================================================================
 
 # Flask Configuration
 if __name__ == '__main__':
