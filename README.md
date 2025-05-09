@@ -1,6 +1,26 @@
 # AetherNet
 
-Notes:
+## 🚀 Current Features
+
+### ✅ Live Climate Simulation
+- Generates **temperature, humidity, and rainfall** data dynamically.
+- Adjusts values based on **seasonal variations and time of day**.
+
+### ✅ Automated Decision-Making
+- Uses **HVAC & rainwater logic** to optimize system operations:
+  - **Stores rainwater** when humidity is high & it's raining.
+  - **Redirects excess water** to irrigation if tank levels are full.
+  - **Increases heating** when temperatures are low.
+
+### ✅ User Override System
+- Allows manual control over automation:
+  - **"Force Rainwater Storage"** → Stores rainwater regardless of conditions.
+  - **"Force Rainwater Redirection"** → Redirects water instead of storing.
+
+### ✅ Web UI with Live Updates
+- Displays **sensor data on a dashboard** (`/sensor-data`).
+- Uses **real-time graphs (Chart.js)** to visualize climate trends.
+- Provides **instant override feedback** for user interactions.
 
 ### Override buttons
 
