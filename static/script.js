@@ -1,6 +1,5 @@
 let temperatureChart, humidityChart, tankLevelChart;
 
-// Function to initialize charts
 function createCharts() {
     const ctxTemp = document.getElementById("temperatureChart").getContext("2d");
     const ctxHumidity = document.getElementById("humidityChart").getContext("2d");
@@ -9,19 +8,28 @@ function createCharts() {
     temperatureChart = new Chart(ctxTemp, {
         type: "line",
         data: { labels: [], datasets: [{ label: "Temperature (°C)", data: [], borderColor: "#00ffee", fill: false }] },
-        options: { responsive: true }
+        options: { 
+            responsive: true,
+            maintainAspectRatio: false // Allows chart to stretch to fill container
+        }
     });
 
     humidityChart = new Chart(ctxHumidity, {
         type: "line",
         data: { labels: [], datasets: [{ label: "Humidity (%)", data: [], borderColor: "#A100FF", fill: false }] },
-        options: { responsive: true }
+        options: { 
+            responsive: true,
+            maintainAspectRatio: false
+        }
     });
 
     tankLevelChart = new Chart(ctxTank, {
         type: "line",
         data: { labels: [], datasets: [{ label: "Tank Level (%)", data: [], borderColor: "#39FF14", fill: false }] },
-        options: { responsive: true }
+        options: { 
+            responsive: true,
+            maintainAspectRatio: false
+        }
     });
 }
 

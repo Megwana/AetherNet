@@ -152,16 +152,18 @@ h1 {
 
 /* Sensor Data Section */
 .sensor-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid */
-    gap: 2rem 6rem; 
+    display: flex;
     justify-content: center;
-    margin: 4rem auto;
-    max-width: 1000px; /* Prevents excessive width */
+    gap: 2rem; /* Even spacing between boxes */
+    flex-wrap: wrap; /* Prevents overflow on smaller screens */
+    margin-bottom: 20rem;
 }
+
 
 /* Individual Sensor Box */
 .sensor-box {
+    flex: 1;
+    min-width: 300px; /* Controls width without excessive shrinking */
     background-color: var(--second-bg-color);
     margin: 2rem;
     padding: 25px;
@@ -171,11 +173,33 @@ h1 {
     border: 2px solid var(--main-color);
     font-size: 2rem;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    height: 180px;
-    min-width: 280px; /* Prevents shrinking too much */
+    /* height: 180px;
+    min-width: 280px; Prevents shrinking too much */
 }
 
-.sensor-box:hover {
+.chart-container {
+    min-width: 300px;
+    height: 100%;
+    display: flex; /* Ensures proper scaling */
+    justify-content: center;
+    align-items: center;
+    margin: 2rem;
+    padding: 25px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(0, 255, 238, 0.6);
+    border: 2px solid var(--main-color);
+    font-size: 2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.chart-container canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+
+.sensor-box:hover, .chart-box:hover {
     transform: scale(1.05);
     box-shadow: 0 0 20px var(--accent-color);
 }
