@@ -58,8 +58,19 @@ function fetchSensorData() {
         .catch(error => console.error("Error fetching data:", error));
 }
 
+function overrideDecision(action) {
+    fetch(`${BASE_URL}/api/override?decision=${action}`, { method: "GET" })
+        .then(response => response.json())
+        .then(data => {
+            alert(`System Override: ${data.new_decision}`);
+            document.getElementById("decision").innerText = data.new_decision; // ✅ Update UI
+        })
+        .catch(error => console.error("Error overriding decision:", error));
+}
+
 // Initialize Charts and Set Refresh Interval
 document.addEventListener("DOMContentLoaded", () => {
     createCharts();
     setInterval(fetchSensorData, 5000); // Updates data every 5 seconds
 });
+

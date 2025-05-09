@@ -83,7 +83,7 @@ def get_sensor_data():
     return jsonify(data)
 
 
-@app.route('/override', methods=['GET'])
+@app.route('/api/override', methods=['GET'])
 def override_system():
     global override_decision
     decision = request.args.get('decision')
