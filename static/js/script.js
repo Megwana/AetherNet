@@ -118,3 +118,26 @@ function createCharts() {
         createCharts();
         setInterval(fetchSensorData, 5000); // Updates data every 5 seconds
     });
+
+    document.getElementById("loginForm").addEventListener("submit", async function(event) {
+        event.preventDefault(); // Prevent default form submission
+    
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+    
+        const response = await fetch("/api/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password })
+        });
+    
+        const data = await response.json();
+        
+        if (response.ok) {
+            localStorage.setItem("user", JSON.stringify(data.user)); // Store user session
+            window.location.href = "/"; // Redirect to home
+        } else {
+            document.getElementById("error-message").textContent = data.error;
+        }
+    });
+    
