@@ -35,7 +35,7 @@ Override buttons are useful because they give the user manual control over the s
 
 ### 🔹 System Sequence Diagram (Message Flow)
 
-![MQTT Image Flow](./mgtt_flow.png)
+![MQTT Image Flow](/assets/mgtt_flow.png)
 
 - **Sensors publish environmental data via MQTT.**  
 - **Flask receives and processes the data, applying automation rules.**  
